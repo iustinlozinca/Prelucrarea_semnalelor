@@ -84,8 +84,8 @@ def ex_2():
     # (c)
     i = 2
     axs[i].set_title("c")
-    timp.append(np.linspace(0, 5, 240)  )
-    axs[i].set_ylim(0.5,1)
+    timp.append(np.linspace(0, 5, 170)  )
+    axs[i].set_ylim(-1,1)
     axs[i].plot(timp[i],np.floor(sinus(timp[i],120)))
 
     # (d)
