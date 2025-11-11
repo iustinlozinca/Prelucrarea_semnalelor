@@ -3,7 +3,7 @@ import math as math
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-import manim
+import matplotlib.animation as anim
 pi = np.pi
 
 #exemplu sintaxa math.e**(1j*5)
@@ -66,7 +66,9 @@ def ex_2():
     axs[1].plot(y.real,y.imag)
     os.makedirs("imagini_3", exist_ok=True)
     plt.savefig("imagini_3/ex_2.pdf", format="pdf")
-    plt.show()
+    for elem in y:
+        axs[1].stem(y.real, y.imag)
+        plt.show()
 
          
 
