@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 from pprint import pprint
 import os
 import time
-
+import scipy
+from pprint import pprint
 
 def is_power(n):
     """#credit: https://www.geeksforgeeks.org/python/python-program-to-find-whether-a-no-is-power-of-two/
@@ -15,9 +16,6 @@ def is_power(n):
     and - scurtcircuit
     """
     return n > 0 and (n & (n -1 )) == 0
-    
-
-
 
 
 def fft(x):
@@ -130,10 +128,112 @@ def plot_log(list_N, list_fou, list_fft, list_np):
     plt.ylabel('Timp')
     plt.xlabel('N')
     plt.legend()
-    plt.savefig("imagini_4/timpi.pdf",format = "pdf")
+    plt.savefig("imagini/timpi.pdf",format = "pdf")
+
+def ex_1():
+    plot_log(*bench())
+
+def ex_2():
+    timp_gresit = np.linspace(0,3,6,endpoint=False) # 2hz (limita  Nyquist)
+    timp = np.linspace(0,3,1000)
+
+    x = lambda t: np.sin(2*np.pi*t) # 1hz
+    y = lambda t: np.sin(4*np.pi*t) # 2 Hz
+    z = lambda t: np.sin(6*np.pi*t) # 3 Hz
+
+    fig , axs = plt.subplots(4)
+
+    for ax in axs.flatten():
+        ax.set_ylim(-1,1)
+
+    axs[0].plot(timp,x(timp))
+
+    axs[1].plot(timp,x(timp))
+    axs[1].plot(timp_gresit,x(timp_gresit),'oy')
+
+    axs[2].plot(timp,z(timp))
+    axs[2].plot(timp_gresit,z(timp_gresit),'oy')
+
+    axs[3].plot(timp,y(timp))
+    axs[3].plot(timp_gresit,y(timp_gresit),'oy')
+
+    plt.savefig("imagini/ex_2.pdf", format = "pdf")
+    plt.show()
+
+def ex_3():
+    timp_gresit = np.linspace(0,3,6) # 2hz (limita  Nyquist+1)
+    timp = np.linspace(0,3,1000)
+
+    x = lambda t: np.sin(2*np.pi*t) # 1hz
+    y = lambda t: np.sin(4*np.pi*t) # 2 Hz
+    z = lambda t: np.sin(6*np.pi*t) # 3 Hz
+
+    fig , axs = plt.subplots(4)
+
+    for ax in axs.flatten():
+        ax.set_ylim(-1,1)
+
+    axs[0].plot(timp,x(timp))
+
+    axs[1].plot(timp,x(timp))
+    axs[1].plot(timp_gresit,x(timp_gresit),'oy')
+
+    axs[2].plot(timp,z(timp))
+    axs[2].plot(timp_gresit,z(timp_gresit),'oy')
+
+    axs[3].plot(timp,y(timp))
+    axs[3].plot(timp_gresit,y(timp_gresit),'oy')
+
+    plt.savefig("imagini/ex_3.pdf", format = "pdf")
+    plt.show()
+
+def ex_6():
+    rate , vocale = scipy.io.wavfile.read("audio/vocale.wav")
+    
+    N = len(vocale)
+
+    marime_grup = int(0.01*N)
+
+    suprapunere = int(marime_grup/2)
+
+    ferestre = [vocale[i:i+marime_grup] for i in range(0, N-marime_grup +1, suprapunere)]
+
+
+    fft_lista = np.fft.fft(ferestre)
+
+    fft_absolut = np.abs(fft_lista)
+
+    spectrograma , nimic = np.split(fft_absolut, 2, axis =1)
+    #pastram doar jumatate, fiind numere reale
+
+
+    spectrograma = spectrograma.T
+
+
+
+    spectrograma_db = 20 * np.log10(spectrograma + 1e-10)
+
+    plt.figure(figsize=(10, 6))
+    
+    plt.imshow(spectrograma_db, 
+               aspect='auto', 
+               origin='lower', 
+               cmap='jet')
+
+    plt.title("Spectograma")
+    plt.ylabel("Frecventa")
+    plt.xlabel("Timp")
+    plt.colorbar(label="Amplitudine (dBFS)")    
+    
+    plt.savefig("imagini/ex_6.pdf", format = "pdf")
+
+    plt.show()
 
 
 def main():
-    plot_log(*bench())
+    ex_1()
+    ex_2()
+    ex_3()
+    ex_6()
 
 main()
