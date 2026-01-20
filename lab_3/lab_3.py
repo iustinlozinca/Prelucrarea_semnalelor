@@ -240,11 +240,3 @@ def ex_3(N=500):
 
     plt.savefig("imagini/ex_3.pdf" , format = "pdf")
     plt.show()
-
-def main():
-    ex_1()
-    ex_2(1,False)
-    ex_2(2,False)
-    ex_3()
-
-main()

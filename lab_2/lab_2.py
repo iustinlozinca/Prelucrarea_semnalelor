@@ -271,7 +271,6 @@ def ex_7():
     plt.show()
 
 def ex_8():
-    #Inginerii astia si aproximarile lor, urmeaza sa aflu ca pi=3 :)
 
     timp = np.linspace(-np.pi/2,np.pi/2,10000)
 
@@ -346,22 +345,22 @@ def ex_8_log():
     axs[4].plot(timp,np.abs(np.sin(timp)-Pade(timp)),'g',label='err Pade',alpha = 0.5)
     axs[4].set_title("eroare")
     axs[4].set_yscale('log')
-    axs[4].set_xlim(0)
+    axs[4].set_xlim(-np.pi/2)
     axs[4].legend()
 
-    plt.savefig("imagini/ex_8.pdf", format = "pdf")
+    plt.savefig("imagini/ex_8_log.pdf", format = "pdf")
     plt.show()
 
 def main():
-    ex_1()
-    ex_2_a()
-    ex_2_b()
-    # ex_3()
-    ex_4()
-    # ex_5()
-    ex_6()
-    ex_7()
-    ex_8()
+    # ex_1()
+    # ex_2_a()
+    # ex_2_b()
+    # # ex_3()
+    # ex_4()
+    # # ex_5()
+    # ex_6()
+    # ex_7()
+    # ex_8()
     ex_8_log()
 
 main()
